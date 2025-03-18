@@ -1,0 +1,38 @@
+{
+  "plugins": ["prettier", "import", "@typescript-eslint"],
+  "extends": [
+    "eslint:recommended",
+    "plugin:@typescript-eslint/recommended",
+    "plugin:prettier/recommended"
+  ],
+  "parser": "@typescript-eslint/parser",
+  "parserOptions": {
+    "ecmaVersion": 2020,
+    "sourceType": "module",
+    "project": "./tsconfig.json"
+  },
+  "env": {
+    "es6": true,
+    "browser": true,
+    "node": true
+  },
+  "rules": {
+    "@typescript-eslint/consistent-type-assertions": [
+      "error",
+      { "assertionStyle": "never" }
+    ],
+    "@typescript-eslint/consistent-type-imports": "error",
+    "@typescript-eslint/explicit-function-return-type": "error",
+    "@typescript-eslint/explicit-member-accessibility": [
+      "error",
+      { "accessibility": "explicit", "overrides": { "constructors": "off" } }
+    ],
+    "@typescript-eslint/member-ordering": "error",
+    "class-methods-use-this": "error"
+  },
+
+  "linterOptions": {
+    "noInlineConfig": true,
+    "reportUnusedDisableDirectives": true
+  }
+}
