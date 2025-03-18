@@ -13,7 +13,7 @@
     "lint:css:fix": "npx stylelint \"**/*.css\" --fix",
     "format": "npx prettier --write .",
     "format:check": "npx prettier --list-different .",
-    "prepare": "husky && husky install"
+    "prepare": "husky"
   },
   "author": "",
   "license": "ISC",
