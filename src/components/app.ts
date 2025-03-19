@@ -1,13 +1,13 @@
 import HeaderView from "./header/header-view";
+import Main from "./main/main-view";
 
 export default class App {
-  private header: HeaderView;
+  private header: HTMLElement;
+  private main: HTMLElement;
   constructor() {
-    this.createView();
-  }
-
-  protected createView(): void {
-    this.header = new HeaderView();
-    document.body.append(this.header.getElement());
+    this.header = new HeaderView().getElement();
+    this.main = new Main().getElement();
+    document.body.append(this.header);
+    document.body.append(this.main);
   }
 }

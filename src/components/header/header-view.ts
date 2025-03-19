@@ -1,29 +1,24 @@
-import ElementCreator from "../../core/BaseElement";
 import "./header.css";
+import View from "../../core/View";
+import { ElementCreator } from "../../core/BaseElement";
 
 const CssClasses = {
   HEADER: "header",
+  TITLE: "title",
 };
 
-export default class HeaderView {
-  #element: HTMLElement;
-
+export default class HeaderView extends View {
   constructor() {
-    this.#element = this.createView();
-  }
-
-  public getElement(): HTMLElement {
-    return this.#element;
-  }
-
-  protected createView(): HTMLElement {
     const footerParameters = {
       tag: "header",
       className: CssClasses.HEADER,
-      textContent: "decision making tool",
     };
-    const elementCreator = new ElementCreator(footerParameters);
-    this.#element = elementCreator.getElement();
-    return this.#element;
+    const titleParameters = {
+      tag: "h1",
+      textContent: "decision making tool",
+      className: CssClasses.TITLE,
+    };
+    super(footerParameters);
+    this.addChild(new ElementCreator(titleParameters));
   }
 }

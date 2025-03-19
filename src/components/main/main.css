@@ -1,0 +1,6 @@
+main {
+  min-width: 640px;
+  min-height: 500px;
+  margin: 0 auto;
+  border: 1px solid black;
+}

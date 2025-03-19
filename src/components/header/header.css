@@ -2,8 +2,10 @@ header {
   display: flex;
   align-items: center;
   justify-content: center;
+  padding: 20px;
 }
 
 h1.title {
   color: darkblue;
+  text-transform: uppercase;
 }
