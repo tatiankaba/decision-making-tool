@@ -1,4 +1,4 @@
-import type { parameters } from "./BaseElement";
+import type { parameters } from "../types/common";
 import { ElementCreator } from "./BaseElement";
 
 export default class View {

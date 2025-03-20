@@ -50,7 +50,9 @@ export default class Main extends View {
   private createAddButton(): HTMLElement {
     const addOption = (): void => {
       this.#id = this.isListClear() ? 1 : (this.#id += 1);
-      const newOption = new Option(this.#id.toString()).getElement();
+      const newOption = new Option({
+        id: `${this.#id.toString()}`,
+      }).getElement();
       this.#wrapper.append(newOption);
     };
     const params = {
@@ -68,13 +70,6 @@ export default class Main extends View {
   }
 
   private createClearButton(): HTMLElement {
-    // const clearList = (): void => {
-    //   while(this.#wrapper.firstChild) {
-    //     this.#wrapper.removeChild(this.#wrapper.firstChild);
-    // };
-    // this.#id = 1;
-    // localStorage.removeItem('options');
-    // };
     const params = {
       tag: "button",
       className: CssClasses.ADD_BUTTON,

@@ -1,6 +1,6 @@
 import { ElementCreator } from "../../core/BaseElement";
 import "./option.css";
-
+import type { localStorageObject } from "../../types/common";
 const CssClasses = {
   LI: "li",
   BUTTON: "btn",
@@ -8,25 +8,28 @@ const CssClasses = {
   LABEL: "label",
 };
 
-type localStorageObject = {
-  id: string;
-  title: string;
-  weight: string;
-};
-
 export default class Option {
   #id: string;
   #element: HTMLElement;
-  #title: string = "";
-  #weight: string = "";
+  #title: string | undefined;
+  #weight: number | undefined;
 
-  constructor(id: string) {
+  constructor(obj: localStorageObject) {
     const params = {
       tag: "li",
       className: CssClasses.LI,
     };
     this.#element = new ElementCreator(params).getElement();
-    this.#id = id;
+    this.#id = obj.id;
+    if (obj.title) {
+      this.#title = obj?.title;
+    }
+    if (obj.id) {
+      this.#id = obj?.id;
+    }
+    if (obj.weight) {
+      this.#weight = parseInt(obj.weight);
+    }
     this.#element.append(
       this.createLabel(),
       this.createTitleInput(),
@@ -67,6 +70,7 @@ export default class Option {
       type: "text",
       id: this.#id,
       typeOfEvent: "input",
+      value: this.#title ?? "",
     };
     const inputTitle = new ElementCreator(params);
     return inputTitle.getElement();
@@ -76,8 +80,8 @@ export default class Option {
     const inputChange = (event: Event): void => {
       if (event.target instanceof HTMLInputElement) {
         const input = event.target;
-        this.#weight = input.value;
-        this.updateLocaleStorage("weight", this.#weight);
+        this.#weight = Number(input.value);
+        this.updateLocaleStorage("weight", this.#weight.toString());
       }
     };
     const params = {
@@ -87,6 +91,7 @@ export default class Option {
       placeholder: "Weight",
       type: "number",
       typeOfEvent: "input",
+      value: this.#weight ?? "",
     };
     const inputWeight = new ElementCreator(params);
     return inputWeight.getElement();
@@ -118,7 +123,7 @@ export default class Option {
     options.push({
       id: this.#id,
       title: this.#title,
-      weight: this.#weight,
+      weight: this.#weight?.toString(),
     });
     localStorage.setItem("options", JSON.stringify(options));
   }
@@ -141,7 +146,6 @@ export default class Option {
       localStorage.getItem("options") || "[]",
     );
     const index: number = options.findIndex((option) => option.id === this.#id);
-
     if (index !== -1) {
       options[index][prop] = value;
       localStorage.setItem("options", JSON.stringify(options));

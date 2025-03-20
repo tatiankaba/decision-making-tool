@@ -1,15 +1,4 @@
-export type parameters = {
-  tag: string;
-  textContent?: string;
-  className: string[] | string;
-  callback?: (event: Event) => void;
-  id?: string;
-  type?: string;
-  name?: string;
-  placeholder?: string;
-  typeOfEvent?: string | "click";
-  for?: string;
-};
+import type { parameters } from "../types/common";
 
 export class ElementCreator {
   #element: HTMLElement;
@@ -22,6 +11,9 @@ export class ElementCreator {
     }
     if (params.callback) {
       this.setCallBack(params.callback, params.typeOfEvent);
+    }
+    if (params.value) {
+      this.setValue(params.value);
     }
     if (params.placeholder) {
       this.setPlaceholder(params.placeholder);
@@ -44,6 +36,12 @@ export class ElementCreator {
   protected setFor(forValue: string): void {
     if (this.#element instanceof HTMLLabelElement) {
       this.#element.htmlFor = forValue;
+    }
+  }
+
+  protected setValue(value: string | number): void {
+    if (this.#element instanceof HTMLInputElement) {
+      this.#element.value = String(value);
     }
   }
 
