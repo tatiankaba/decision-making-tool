@@ -19,11 +19,15 @@ export default class View {
     return this.#element;
   }
 
-  protected addChild(element: HTMLElement | ElementCreator): void {
+  protected addChild(
+    element: HTMLElement | ElementCreator | (HTMLElement | ElementCreator)[],
+  ): void {
     if (element instanceof ElementCreator) {
       this.#element.append(element.getElement());
-    } else {
+    } else if (element instanceof HTMLElement) {
       this.#element.append(element);
+    } else if (Array.isArray(element)) {
+      element.forEach((child) => this.addChild(child));
     }
   }
 }

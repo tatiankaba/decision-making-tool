@@ -2,5 +2,6 @@
   "extends": ["stylelint-config-standard", "stylelint-config-clean-order"],
   "rules": {
     "max-nesting-depth": 3
-  }
+  },
+  "ignoreFiles": ["src/normalize.css"]
 }

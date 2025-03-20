@@ -8,6 +8,12 @@ const CssClasses = {
   LABEL: "label",
 };
 
+type localStorageObject = {
+  id: string;
+  title: string;
+  weight: string;
+};
+
 export default class Option {
   #id: string;
   #element: HTMLElement;
@@ -27,6 +33,7 @@ export default class Option {
       this.createWeightInput(),
       this.createDeleteBtn(),
     );
+    this.saveIdToLocalStorage();
   }
 
   public getElement(): HTMLElement {
@@ -38,6 +45,7 @@ export default class Option {
       tag: "label",
       className: CssClasses.LABEL,
       for: this.#id,
+      textContent: `#${this.#id}`,
     };
     const label = new ElementCreator(params);
     return label.getElement();
@@ -85,6 +93,7 @@ export default class Option {
   private createDeleteBtn(): HTMLElement {
     const removeElement = (): void => {
       this.#element.remove();
+      this.deleteIdFromLocalStorage();
     };
     const params = {
       tag: "button",
@@ -94,5 +103,31 @@ export default class Option {
     };
     const deleteBtn = new ElementCreator(params);
     return deleteBtn.getElement();
+  }
+
+  private saveIdToLocalStorage(): void {
+    const optionsString: string | null = localStorage.getItem("options");
+    let options: localStorageObject[] = [];
+    if (optionsString) {
+      options = JSON.parse(optionsString);
+    }
+    const isDuplicate = options.some((option) => option.id === this.#id);
+    if (isDuplicate) return;
+    options.push({
+      id: this.#id,
+      title: this.#title,
+      weight: this.#weight,
+    });
+    localStorage.setItem("options", JSON.stringify(options));
+  }
+
+  private deleteIdFromLocalStorage(): void {
+    const optionsString: string | null = localStorage.getItem("options");
+    if (optionsString) {
+      const options: localStorageObject[] = JSON.parse(optionsString);
+      const index = options.findIndex((option) => option.id === this.#id);
+      options.splice(index, 1);
+      localStorage.setItem("options", JSON.stringify(options));
+    }
   }
 }

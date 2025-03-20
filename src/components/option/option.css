@@ -1,8 +1,25 @@
 li {
   display: flex;
+  gap: 10px;
   align-items: center;
   justify-content: space-evenly;
 
-  max-width: 400px;
+  min-height: 40px;
   margin: 0 auto;
+  border: 1px solid black;
+}
+
+button {
+  cursor: pointer;
+  min-width: 80px;
+  min-height: 25px;
+  border: 1px solid black;
+}
+
+input {
+  min-height: 25px;
+}
+
+label {
+  font-size: 20px;
 }
