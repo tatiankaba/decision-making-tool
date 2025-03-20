@@ -2,21 +2,25 @@ import View from "../../core/View";
 import "./main.css";
 import Option from "../option/option";
 import { ElementCreator } from "../../core/BaseElement";
+import "./main.css";
 
 const CssClasses = {
   MAIN: "main",
   UL: "ul",
-  ADD_BUTTON: "button.add-btn",
+  ADD_BUTTON: ["button", "add-btn"],
 };
 
 export default class Main extends View {
   #wrapper: HTMLElement;
+  #id: number;
+
   constructor() {
     const params = {
       tag: "main",
       className: CssClasses.MAIN,
     };
     super(params);
+    this.#id = 1;
     this.#wrapper = this.createOptionWrapper();
     this.addChild([this.#wrapper, this.createAddButton()]);
   }
@@ -33,7 +37,8 @@ export default class Main extends View {
 
   private createAddButton(): HTMLElement {
     const addOption = (): void => {
-      const newOption = new Option("1").getElement();
+      this.#id = this.isListClear() ? 1 : (this.#id += 1);
+      const newOption = new Option(this.#id.toString()).getElement();
       this.#wrapper.append(newOption);
     };
     const params = {
@@ -44,5 +49,9 @@ export default class Main extends View {
     };
     const wrapper = new ElementCreator(params);
     return wrapper.getElement();
+  }
+
+  private isListClear(): boolean {
+    return !this.#wrapper.firstChild;
   }
 }
