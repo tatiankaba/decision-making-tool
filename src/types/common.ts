@@ -18,4 +18,5 @@ export type parameters = {
   value?: string | number;
   href?: string;
   download?: string;
+  accept?: string;
 };

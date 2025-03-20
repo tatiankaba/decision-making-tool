@@ -16,6 +16,17 @@ export default class ListOfOptions {
     this.#id = 1;
   }
 
+  public updateList(): void {
+    const storedData = localStorage.getItem("options");
+    if (storedData) {
+      const options: localStorageObject[] = JSON.parse(storedData);
+      options.forEach((obj: localStorageObject) => {
+        const option = new Option(obj).getElement();
+        this.#wrapper.append(option);
+      });
+    }
+  }
+
   public isListClear(): boolean {
     return !this.#wrapper.firstChild;
   }
@@ -43,16 +54,5 @@ export default class ListOfOptions {
       this.updateList();
     }
     return this.#wrapper;
-  }
-
-  private updateList(): void {
-    const storedData = localStorage.getItem("options");
-    if (storedData) {
-      const options: localStorageObject[] = JSON.parse(storedData);
-      options.forEach((obj: localStorageObject) => {
-        const option = new Option(obj).getElement();
-        this.#wrapper.append(option);
-      });
-    }
   }
 }

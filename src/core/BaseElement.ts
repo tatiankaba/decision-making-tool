@@ -34,6 +34,10 @@ export class ElementCreator {
     if (params.download) {
       this.setDownloadName(params.download);
     }
+
+    if (params.accept) {
+      this.setAccess(params.accept);
+    }
   }
 
   public getElement(): HTMLElement {
@@ -43,6 +47,12 @@ export class ElementCreator {
   protected setFor(forValue: string): void {
     if (this.#element instanceof HTMLLabelElement) {
       this.#element.htmlFor = forValue;
+    }
+  }
+
+  protected setAccess(accept: string): void {
+    if (this.#element instanceof HTMLInputElement) {
+      this.#element.accept = accept;
     }
   }
 

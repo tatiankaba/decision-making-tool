@@ -29,6 +29,7 @@ export default class Main extends View {
       this.createAddButton(),
       this.createClearButton(),
       createSaveButton(),
+      this.createLoadBtn(),
     ]);
   }
 
@@ -59,5 +60,49 @@ export default class Main extends View {
     };
     const clearBtn = new ElementCreator(params);
     return clearBtn.getElement();
+  }
+
+  private createLoadBtn(): HTMLElement {
+    const handler = (event: Event): void => {
+      if (event.target instanceof HTMLInputElement) {
+        const input: HTMLInputElement = event.target;
+        if (!input.files?.length) return;
+        const file = input.files[0];
+        const reader = new FileReader();
+        reader.onload = (e): void => {
+          if (typeof e.target?.result === "string") {
+            const jsonData: string = JSON.parse(e.target?.result);
+            localStorage.removeItem("options");
+            this.#wrapper.clearList();
+            localStorage.setItem("options", jsonData);
+            this.#wrapper.updateList();
+          }
+        };
+        reader.readAsText(file);
+      }
+    };
+    const inputParams = {
+      tag: "input",
+      className: CssClasses.ADD_BUTTON,
+      callback: handler,
+      value: "Load file",
+      typeOfEvent: "change",
+      type: "file",
+      accept: ".json",
+    };
+    const loadInput = new ElementCreator(inputParams).getElement();
+    const btnHandler = (): void => {
+      loadInput.click();
+    };
+    const btnParams = {
+      tag: "button",
+      className: CssClasses.ADD_BUTTON,
+      callback: btnHandler,
+      textContent: "Load file",
+    };
+
+    const loadBtn = new ElementCreator(btnParams);
+
+    return loadBtn.getElement();
   }
 }
