@@ -11,8 +11,8 @@ const CssClasses = {
 export default class Option {
   #id: string;
   #element: HTMLElement;
-  #title: string | undefined;
-  #weight: number | undefined;
+  #title: string = "";
+  #weight: number | string = "";
 
   constructor(obj: localStorageObject) {
     const params = {

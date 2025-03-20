@@ -3,6 +3,7 @@ import "./main.css";
 import Option from "../option/option";
 import { ElementCreator } from "../../core/BaseElement";
 import "./main.css";
+import createSaveButton from "../buttons/save-btn";
 
 const CssClasses = {
   MAIN: "main",
@@ -26,6 +27,7 @@ export default class Main extends View {
       this.#wrapper,
       this.createAddButton(),
       this.createClearButton(),
+      createSaveButton(),
     ]);
   }
 

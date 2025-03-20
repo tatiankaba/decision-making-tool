@@ -16,4 +16,6 @@ export type parameters = {
   typeOfEvent?: string | "click";
   for?: string;
   value?: string | number;
+  href?: string;
+  download?: string;
 };

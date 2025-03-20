@@ -27,6 +27,13 @@ export class ElementCreator {
     if (params.for) {
       this.setFor(params.for);
     }
+    if (params.href) {
+      this.setHref(params.href);
+    }
+
+    if (params.download) {
+      this.setDownloadName(params.download);
+    }
   }
 
   public getElement(): HTMLElement {
@@ -36,6 +43,18 @@ export class ElementCreator {
   protected setFor(forValue: string): void {
     if (this.#element instanceof HTMLLabelElement) {
       this.#element.htmlFor = forValue;
+    }
+  }
+
+  protected setDownloadName(downloadName: string): void {
+    if (this.#element instanceof HTMLAnchorElement) {
+      this.#element.download = downloadName;
+    }
+  }
+
+  protected setHref(href: string): void {
+    if (this.#element instanceof HTMLAnchorElement) {
+      this.#element.href = href;
     }
   }
 
