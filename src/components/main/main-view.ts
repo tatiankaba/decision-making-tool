@@ -4,6 +4,7 @@ import Option from "../option/option";
 import { ElementCreator } from "../../core/BaseElement";
 import "./main.css";
 import createSaveButton from "../buttons/save-btn";
+import ListOfOptions from "../option-list/option-list";
 
 const CssClasses = {
   MAIN: "main",
@@ -12,7 +13,7 @@ const CssClasses = {
 };
 
 export default class Main extends View {
-  #wrapper: HTMLElement;
+  #wrapper: ListOfOptions;
   #id: number;
 
   constructor() {
@@ -22,40 +23,22 @@ export default class Main extends View {
     };
     super(params);
     this.#id = 1;
-    this.#wrapper = this.createOptionWrapper();
+    this.#wrapper = new ListOfOptions();
     this.addChild([
-      this.#wrapper,
+      this.#wrapper.getElement(),
       this.createAddButton(),
       this.createClearButton(),
       createSaveButton(),
     ]);
   }
 
-  public clearList(): void {
-    while (this.#wrapper.firstChild) {
-      this.#wrapper.removeChild(this.#wrapper.firstChild);
-    }
-    this.#id = 1;
-    localStorage.removeItem("options");
-  }
-
-  private createOptionWrapper(): HTMLElement {
-    const params = {
-      tag: "ul",
-      className: CssClasses.UL,
-    };
-    const wrapper = new ElementCreator(params);
-    this.#wrapper = wrapper.getElement();
-    return this.#wrapper;
-  }
-
   private createAddButton(): HTMLElement {
     const addOption = (): void => {
-      this.#id = this.isListClear() ? 1 : (this.#id += 1);
+      this.#id = this.#wrapper.isListClear() ? 1 : (this.#id += 1);
       const newOption = new Option({
         id: `${this.#id.toString()}`,
       }).getElement();
-      this.#wrapper.append(newOption);
+      this.#wrapper.getElement().append(newOption);
     };
     const params = {
       tag: "button",
@@ -67,15 +50,11 @@ export default class Main extends View {
     return addBtn.getElement();
   }
 
-  private isListClear(): boolean {
-    return !this.#wrapper.firstChild;
-  }
-
   private createClearButton(): HTMLElement {
     const params = {
       tag: "button",
       className: CssClasses.ADD_BUTTON,
-      callback: this.clearList.bind(this),
+      callback: this.#wrapper.clearList.bind(this.#wrapper),
       textContent: "Clear list",
     };
     const clearBtn = new ElementCreator(params);
