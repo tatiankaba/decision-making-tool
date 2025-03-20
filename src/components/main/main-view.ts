@@ -22,7 +22,19 @@ export default class Main extends View {
     super(params);
     this.#id = 1;
     this.#wrapper = this.createOptionWrapper();
-    this.addChild([this.#wrapper, this.createAddButton()]);
+    this.addChild([
+      this.#wrapper,
+      this.createAddButton(),
+      this.createClearButton(),
+    ]);
+  }
+
+  public clearList(): void {
+    while (this.#wrapper.firstChild) {
+      this.#wrapper.removeChild(this.#wrapper.firstChild);
+    }
+    this.#id = 1;
+    localStorage.removeItem("options");
   }
 
   private createOptionWrapper(): HTMLElement {
@@ -47,11 +59,29 @@ export default class Main extends View {
       callback: addOption,
       textContent: "add option",
     };
-    const wrapper = new ElementCreator(params);
-    return wrapper.getElement();
+    const addBtn = new ElementCreator(params);
+    return addBtn.getElement();
   }
 
   private isListClear(): boolean {
     return !this.#wrapper.firstChild;
+  }
+
+  private createClearButton(): HTMLElement {
+    // const clearList = (): void => {
+    //   while(this.#wrapper.firstChild) {
+    //     this.#wrapper.removeChild(this.#wrapper.firstChild);
+    // };
+    // this.#id = 1;
+    // localStorage.removeItem('options');
+    // };
+    const params = {
+      tag: "button",
+      className: CssClasses.ADD_BUTTON,
+      callback: this.clearList.bind(this),
+      textContent: "Clear list",
+    };
+    const clearBtn = new ElementCreator(params);
+    return clearBtn.getElement();
   }
 }

@@ -56,6 +56,7 @@ export default class Option {
       if (event.target instanceof HTMLInputElement) {
         const input = event.target;
         this.#title = input.value;
+        this.updateLocaleStorage("title", this.#title);
       }
     };
     const params = {
@@ -76,6 +77,7 @@ export default class Option {
       if (event.target instanceof HTMLInputElement) {
         const input = event.target;
         this.#weight = input.value;
+        this.updateLocaleStorage("weight", this.#weight);
       }
     };
     const params = {
@@ -127,6 +129,21 @@ export default class Option {
       const options: localStorageObject[] = JSON.parse(optionsString);
       const index = options.findIndex((option) => option.id === this.#id);
       options.splice(index, 1);
+      localStorage.setItem("options", JSON.stringify(options));
+    }
+  }
+
+  private updateLocaleStorage(
+    prop: keyof localStorageObject,
+    value: string,
+  ): void {
+    const options: localStorageObject[] = JSON.parse(
+      localStorage.getItem("options") || "[]",
+    );
+    const index: number = options.findIndex((option) => option.id === this.#id);
+
+    if (index !== -1) {
+      options[index][prop] = value;
       localStorage.setItem("options", JSON.stringify(options));
     }
   }
