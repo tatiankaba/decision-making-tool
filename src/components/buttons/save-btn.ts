@@ -11,7 +11,8 @@ export default function createSaveButton(): HTMLElement {
     if (!options) {
       return;
     }
-    const jsonBlob = new Blob([JSON.stringify(options, null, 2)], {
+    const parsedOptions = JSON.parse(options);
+    const jsonBlob = new Blob([JSON.stringify(parsedOptions, null, 2)], {
       type: "application/json",
     });
     const url = URL.createObjectURL(jsonBlob);

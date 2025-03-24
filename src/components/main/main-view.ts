@@ -5,6 +5,7 @@ import { ElementCreator } from "../../core/BaseElement";
 import "./main.css";
 import createSaveButton from "../buttons/save-btn";
 import ListOfOptions from "../option-list/option-list";
+import { isJSONValid } from "../../utils/utils";
 
 const CssClasses = {
   MAIN: "main",
@@ -31,6 +32,17 @@ export default class Main extends View {
       createSaveButton(),
       this.createLoadBtn(),
     ]);
+  }
+
+  public setContent(view: View): void {
+    const element = view.getElement();
+    const currentElement = this.#wrapper.getElement();
+    if (currentElement !== null) {
+      while (currentElement.firstElementChild) {
+        currentElement.removeChild(currentElement.firstElementChild);
+      }
+    }
+    currentElement.append(element);
   }
 
   private createAddButton(): HTMLElement {
@@ -70,12 +82,28 @@ export default class Main extends View {
         const file = input.files[0];
         const reader = new FileReader();
         reader.onload = (e): void => {
-          if (typeof e.target?.result === "string") {
-            const jsonData: string = JSON.parse(e.target?.result);
-            localStorage.removeItem("options");
-            this.#wrapper.clearList();
-            localStorage.setItem("options", jsonData);
-            this.#wrapper.updateList();
+          try {
+            const response = e.target?.result;
+            if (typeof response !== "string") {
+              throw new Error("File content is not a string");
+            }
+            const parsedJsonData = JSON.parse(response);
+            if (isJSONValid(parsedJsonData)) {
+              localStorage.removeItem("options");
+              this.#wrapper.clearList();
+              localStorage.setItem("options", JSON.stringify(parsedJsonData));
+              this.#wrapper.updateList();
+            } else {
+              throw new Error("Your file isn't correct JSON");
+            }
+          } catch (error) {
+            if (error instanceof Error) {
+              alert("File is incorrect: " + error.message);
+              console.error("Mistake parsing JSON:", error);
+            } else {
+              alert("Unknown error");
+              console.error("Unknown error", error);
+            }
           }
         };
         reader.readAsText(file);
