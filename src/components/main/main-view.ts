@@ -93,6 +93,7 @@ export default class Main extends View {
               this.#wrapper.clearList();
               localStorage.setItem("options", JSON.stringify(parsedJsonData));
               this.#wrapper.updateList();
+              console.log(parsedJsonData);
             } else {
               throw new Error("Your file isn't correct JSON");
             }
