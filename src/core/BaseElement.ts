@@ -81,7 +81,10 @@ export class ElementCreator {
   }
 
   protected setPlaceholder(placeholder: string): void {
-    if (this.#element instanceof HTMLInputElement) {
+    if (
+      this.#element instanceof HTMLInputElement ||
+      this.#element instanceof HTMLTextAreaElement
+    ) {
       this.#element.placeholder = placeholder;
     }
   }

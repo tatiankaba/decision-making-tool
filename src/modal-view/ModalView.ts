@@ -33,6 +33,10 @@ export default class ModalView extends View {
     this.addChild(this.#modal);
   }
 
+  public getModalWindow(): HTMLElement {
+    return this.#modal;
+  }
+
   protected createCloseBtn(text: string): HTMLElement {
     const handler = (): void => {
       this.closeModalWindow();
@@ -47,7 +51,7 @@ export default class ModalView extends View {
     return closeBtn;
   }
 
-  private closeModalWindow(): void {
+  protected closeModalWindow(): void {
     this.getElement().remove();
     document.body.classList.remove("hidden");
   }

@@ -1,11 +1,12 @@
 import View from "../../core/View";
 import "./main.css";
-import Option from "../option/option";
 import { ElementCreator } from "../../core/BaseElement";
 import "./main.css";
 import createSaveButton from "../buttons/save-btn";
-import ListOfOptions from "../option-list/option-list";
-import { isJSONValid } from "../../utils/utils";
+import type { ListOfOptions } from "../option-list/option-list";
+import { listOfOptions } from "../option-list/option-list";
+import { isJSONValid } from "../../utils/isJSONValid";
+import pasteListModalView from "../../modal-view/pasteListModal";
 
 const CssClasses = {
   MAIN: "main",
@@ -16,6 +17,7 @@ const CssClasses = {
 export default class Main extends View {
   #wrapper: ListOfOptions;
   #id: number;
+  #pasteBtn: HTMLElement;
 
   constructor() {
     const params = {
@@ -24,14 +26,20 @@ export default class Main extends View {
     };
     super(params);
     this.#id = 1;
-    this.#wrapper = new ListOfOptions();
+    this.#wrapper = listOfOptions;
+    this.#pasteBtn = this.createPasteButton();
     this.addChild([
       this.#wrapper.getElement(),
       this.createAddButton(),
       this.createClearButton(),
       createSaveButton(),
       this.createLoadBtn(),
+      this.#pasteBtn,
     ]);
+  }
+
+  public getListOfOptions(): HTMLElement {
+    return this.#wrapper.getElement();
   }
 
   public setContent(view: View): void {
@@ -47,11 +55,7 @@ export default class Main extends View {
 
   private createAddButton(): HTMLElement {
     const addOption = (): void => {
-      this.#id = this.#wrapper.isListClear() ? 1 : (this.#id += 1);
-      const newOption = new Option({
-        id: `${this.#id.toString()}`,
-      }).getElement();
-      this.#wrapper.getElement().append(newOption);
+      this.#wrapper.addOption();
     };
     const params = {
       tag: "button",
@@ -72,6 +76,21 @@ export default class Main extends View {
     };
     const clearBtn = new ElementCreator(params);
     return clearBtn.getElement();
+  }
+
+  private createPasteButton(): HTMLElement {
+    const handler = (): void => {
+      const modal = new pasteListModalView().getElement();
+      document.body.append(modal);
+    };
+    const params = {
+      tag: "button",
+      className: CssClasses.ADD_BUTTON,
+      callback: handler,
+      textContent: "Paste list",
+    };
+    this.#pasteBtn = new ElementCreator(params).getElement();
+    return this.#pasteBtn;
   }
 
   private createLoadBtn(): HTMLElement {

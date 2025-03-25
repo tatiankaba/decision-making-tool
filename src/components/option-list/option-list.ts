@@ -7,7 +7,7 @@ const CssClasses = {
   UL: "ul",
 };
 
-export default class ListOfOptions {
+export class ListOfOptions {
   #wrapper: HTMLElement;
   #id: number;
 
@@ -29,6 +29,16 @@ export default class ListOfOptions {
 
   public isListClear(): boolean {
     return !this.#wrapper.firstChild;
+  }
+
+  public addOption(title?: string, weight?: string): void {
+    this.#id = this.isListClear() ? 1 : this.setId();
+    const newOption = new Option({
+      id: `${this.#id.toString()}`,
+      title: title,
+      weight: weight,
+    }).getElement();
+    this.#wrapper.append(newOption);
   }
 
   public clearList(): void {
@@ -55,4 +65,21 @@ export default class ListOfOptions {
     }
     return this.#wrapper;
   }
+
+  private setId(): number {
+    const lastOption = this.#wrapper.lastChild;
+    let id: string | null;
+    if (lastOption instanceof HTMLElement) {
+      if (
+        lastOption.children[1] instanceof HTMLElement &&
+        lastOption.children[1].getAttribute("id") !== null
+      ) {
+        id = lastOption.children[1].getAttribute("id");
+        this.#id = Number(id) + 1;
+      }
+    }
+    return this.#id;
+  }
 }
+
+export const listOfOptions: ListOfOptions = new ListOfOptions();
