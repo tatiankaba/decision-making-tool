@@ -8,7 +8,6 @@ new App();
 
 window.addEventListener("popstate", () => {
   const path = window.location.pathname;
-  console.log("Popstate event triggered, path:", path);
 
   clearWorkSpace();
 
@@ -17,6 +16,7 @@ window.addEventListener("popstate", () => {
   } else if (path === "/") {
     return new App();
   } else {
+    window.history.pushState({}, "", "./");
     return new ErrorPage();
   }
 });

@@ -6,16 +6,6 @@ main {
   border: 1px solid black;
 }
 
-ul {
-  display: flex;
-  flex-direction: column;
-  gap: 10px;
-  align-items: center;
-  justify-content: center;
-
-  margin: 0 auto;
-}
-
 button.add-btn {
   display: block;
 

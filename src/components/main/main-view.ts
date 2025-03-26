@@ -14,7 +14,6 @@ import saveDataToLocalStorage from "../../utils/saveDataToLocalStorage";
 
 const CssClasses = {
   MAIN: "main",
-  UL: "ul",
   ADD_BUTTON: ["button", "add-btn"],
 };
 
