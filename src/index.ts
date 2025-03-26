@@ -1,5 +1,22 @@
 import App from "./components/app";
 import "./normalize.css";
+import clearWorkSpace from "./utils/clearWorkSpace";
+import DecisionPickerPage from "./decision-picker-page/decisionPicker";
+import ErrorPage from "./error-page/ErrorPage";
 
-const app = new App();
-console.log(app);
+new App();
+
+window.addEventListener("popstate", () => {
+  const path = window.location.pathname;
+  console.log("Popstate event triggered, path:", path);
+
+  clearWorkSpace();
+
+  if (path === "/decision-picker") {
+    return new DecisionPickerPage();
+  } else if (path === "/") {
+    return new App();
+  } else {
+    return new ErrorPage();
+  }
+});

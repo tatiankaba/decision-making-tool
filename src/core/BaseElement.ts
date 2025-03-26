@@ -93,10 +93,10 @@ export class ElementCreator {
     if (!this.#element) return;
     if (Array.isArray(classes)) {
       classes.forEach((className) => {
-        this.#element!.classList.add(className);
+        this.#element.classList.add(className);
       });
     } else {
-      this.#element!.classList.add(classes);
+      this.#element.classList.add(classes);
     }
   }
 

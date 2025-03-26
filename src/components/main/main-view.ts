@@ -7,6 +7,9 @@ import type { ListOfOptions } from "../option-list/option-list";
 import { listOfOptions } from "../option-list/option-list";
 import { isJSONValid } from "../../utils/isJSONValid";
 import pasteListModalView from "../../modal-view/pasteListModal";
+import navigateToPage from "../../utils/navigateTO";
+import areOptionsCorrect from "../../utils/areOptionsCorrect";
+import StartModalWindow from "../../modal-view/startModalWindow";
 
 const CssClasses = {
   MAIN: "main",
@@ -18,6 +21,7 @@ export default class Main extends View {
   #wrapper: ListOfOptions;
   #id: number;
   #pasteBtn: HTMLElement;
+  #startBtn: HTMLElement;
 
   constructor() {
     const params = {
@@ -26,6 +30,7 @@ export default class Main extends View {
     };
     super(params);
     this.#id = 1;
+    this.#startBtn = this.createStartButton();
     this.#wrapper = listOfOptions;
     this.#pasteBtn = this.createPasteButton();
     this.addChild([
@@ -35,6 +40,7 @@ export default class Main extends View {
       createSaveButton(),
       this.createLoadBtn(),
       this.#pasteBtn,
+      this.#startBtn,
     ]);
   }
 
@@ -112,17 +118,14 @@ export default class Main extends View {
               this.#wrapper.clearList();
               localStorage.setItem("options", JSON.stringify(parsedJsonData));
               this.#wrapper.updateList();
-              console.log(parsedJsonData);
             } else {
               throw new Error("Your file isn't correct JSON");
             }
           } catch (error) {
             if (error instanceof Error) {
               alert("File is incorrect: " + error.message);
-              console.error("Mistake parsing JSON:", error);
             } else {
               alert("Unknown error");
-              console.error("Unknown error", error);
             }
           }
         };
@@ -152,5 +155,23 @@ export default class Main extends View {
     const loadBtn = new ElementCreator(btnParams);
 
     return loadBtn.getElement();
+  }
+
+  private createStartButton(): HTMLElement {
+    const handler = (): void => {
+      if (areOptionsCorrect()) {
+        navigateToPage("/decision-picker");
+      } else {
+        document.body.append(new StartModalWindow().getElement());
+      }
+    };
+    const params = {
+      tag: "button",
+      className: CssClasses.ADD_BUTTON,
+      callback: handler,
+      textContent: "Start",
+    };
+    this.#startBtn = new ElementCreator(params).getElement();
+    return this.#startBtn;
   }
 }
