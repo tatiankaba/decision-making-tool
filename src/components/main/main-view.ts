@@ -10,6 +10,7 @@ import pasteListModalView from "../../modal-view/pasteListModal";
 import navigateToPage from "../../utils/navigateTO";
 import areOptionsCorrect from "../../utils/areOptionsCorrect";
 import StartModalWindow from "../../modal-view/startModalWindow";
+import saveDataToLocalStorage from "../../utils/saveDataToLocalStorage";
 
 const CssClasses = {
   MAIN: "main",
@@ -160,6 +161,7 @@ export default class Main extends View {
   private createStartButton(): HTMLElement {
     const handler = (): void => {
       if (areOptionsCorrect()) {
+        saveDataToLocalStorage();
         navigateToPage("/decision-picker");
       } else {
         document.body.append(new StartModalWindow().getElement());
