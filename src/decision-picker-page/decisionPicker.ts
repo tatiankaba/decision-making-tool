@@ -1,9 +1,15 @@
 import HeaderView from "../components/header/header-view";
+import BtnsWrapper from "./BtnsWrapper";
 
 export default class DecisionPickerPage {
-  public header: HeaderView;
+  private header: HeaderView;
+  private btnsWrapper: BtnsWrapper;
   constructor() {
     this.header = new HeaderView();
-    document.body.append(this.header.getElement());
+    this.btnsWrapper = new BtnsWrapper();
+    document.body.append(
+      this.header.getElement(),
+      this.btnsWrapper.getElement(),
+    );
   }
 }

@@ -3,6 +3,7 @@ import "./button.css";
 
 const CssClasses = {
   SAVE_BUTTON: "save-btn",
+  BUTTON: "btn",
 };
 
 export default function createSaveButton(): HTMLElement {
@@ -30,7 +31,7 @@ export default function createSaveButton(): HTMLElement {
   };
   const params = {
     tag: "button",
-    className: CssClasses.SAVE_BUTTON,
+    className: [CssClasses.SAVE_BUTTON, CssClasses.BUTTON],
     callback: handler,
     textContent: "Save list",
   };

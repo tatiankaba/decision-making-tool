@@ -1,0 +1,21 @@
+.sec-input {
+  width: 50px;
+  height: 50px;
+  font-size: 20px;
+}
+
+.label-input {
+  display: block;
+  width: 50px;
+  height: 50px;
+  background: url("../../assets/clock.png") center center/cover no-repeat;
+}
+
+.sec-input-wrapper {
+  display: flex;
+  gap: 5px;
+  align-items: center;
+
+  width: 100px;
+  height: 50px;
+}
