@@ -9,6 +9,11 @@ export class ElementCreator {
     if (params.textContent) {
       this.setText(params.textContent);
     }
+
+    if (params.checked) {
+      this.addCheckedStatus(params.checked);
+    }
+
     if (params.callback) {
       this.setCallBack(params.callback, params.typeOfEvent);
     }
@@ -38,15 +43,34 @@ export class ElementCreator {
     if (params.accept) {
       this.setAccess(params.accept);
     }
+
+    if (params.name) {
+      this.setName(params.name);
+    }
   }
 
   public getElement(): HTMLElement {
     return this.#element;
   }
 
+  protected setName(name: string): void {
+    if (
+      this.#element instanceof HTMLInputElement ||
+      this.#element instanceof HTMLButtonElement
+    ) {
+      this.#element.name = name;
+    }
+  }
+
   protected setFor(forValue: string): void {
     if (this.#element instanceof HTMLLabelElement) {
       this.#element.htmlFor = forValue;
+    }
+  }
+
+  protected addCheckedStatus(checked: boolean): void {
+    if (this.#element instanceof HTMLInputElement) {
+      this.#element.checked = checked;
     }
   }
 

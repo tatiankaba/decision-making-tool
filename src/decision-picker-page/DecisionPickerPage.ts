@@ -12,6 +12,7 @@ export default class DecisionPickerPage {
   private header: HeaderView;
   private form: DecisionPickerForm;
   private notification: HTMLElement;
+  #canvas: Canvas;
 
   constructor() {
     this.header = new HeaderView();
@@ -22,11 +23,23 @@ export default class DecisionPickerPage {
       textContent: "Press start button",
     };
     this.notification = new ElementCreator(params).getElement();
+    this.#canvas = new Canvas();
     document.body.append(
       this.header.getElement(),
       this.form.getElement(),
       this.notification,
-      new Canvas().getElement(),
+      this.#canvas.getElement(),
     );
+    // this.#canvas.startRotation();
+    // this.updateNotification();
+  }
+
+  private updateNotification(): void {
+    const rotationSpeed = 0.01;
+    setInterval(() => {
+      if (this.notification instanceof HTMLParagraphElement) {
+        this.notification.textContent = this.#canvas.getTitle();
+      }
+    }, rotationSpeed);
   }
 }

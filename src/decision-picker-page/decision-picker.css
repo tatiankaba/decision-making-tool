@@ -26,6 +26,9 @@
 .canvas-wrapper {
   display: flex;
   justify-content: center;
+
+  max-width: 500px;
+  max-height: 500px;
   margin: 0 auto;
   margin-top: 20px;
 }

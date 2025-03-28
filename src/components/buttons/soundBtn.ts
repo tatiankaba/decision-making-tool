@@ -9,22 +9,28 @@ const CssStyles = {
 };
 
 export default function createSoundInput(): HTMLElement {
+  const handler = (): void => {
+    label.classList.toggle(CssStyles.SOUND_OFF);
+    if (soundInput instanceof HTMLInputElement) {
+      console.log(soundInput.checked);
+    }
+  };
   const params = {
     tag: "input",
     type: "checkbox",
     className: CssStyles.INPUT,
     id: "sound",
     name: "sound",
+    callback: handler,
+    checked: true,
   };
   const soundInput = new ElementCreator(params).getElement();
-  const handler = (): void => {
-    label.classList.toggle(CssStyles.SOUND_OFF);
-  };
+
   const parameters = {
     tag: "label",
     for: "sound",
     className: CssStyles.LABEL,
-    callback: handler,
+    name: "sound",
   };
   const label = new ElementCreator(parameters).getElement();
   label.append(soundInput);

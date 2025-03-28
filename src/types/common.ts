@@ -19,4 +19,5 @@ export type parameters = {
   href?: string;
   download?: string;
   accept?: string;
+  checked?: boolean;
 };

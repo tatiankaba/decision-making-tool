@@ -6,15 +6,11 @@ const CssStyles = {
 };
 
 export default function createSubmitBtn(): HTMLElement {
-  const handler = (event: Event): void => {
-    event.preventDefault();
-  };
   const params = {
     tag: "button",
     type: "submit",
     textContent: "start",
     className: [CssStyles.SUBMIT_BUTTON, CssStyles.BUTTON],
-    callback: handler,
   };
   const submitBtn = new ElementCreator(params).getElement();
   return submitBtn;
