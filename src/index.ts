@@ -1,7 +1,7 @@
 import App from "./components/app";
 import "./normalize.css";
 import clearWorkSpace from "./utils/clearWorkSpace";
-import DecisionPickerPage from "./decision-picker-page/decisionPicker";
+import DecisionPickerPage from "./decision-picker-page/DecisionPickerPage";
 import ErrorPage from "./error-page/ErrorPage";
 
 new App();

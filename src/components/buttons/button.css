@@ -40,3 +40,7 @@
 label.sound-off {
   background: url("../../assets/no-sound.png") center center/cover no-repeat;
 }
+
+.submit-btn {
+  height: 50px;
+}

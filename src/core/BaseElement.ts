@@ -75,7 +75,10 @@ export class ElementCreator {
   }
 
   protected setType(type: string): void {
-    if (this.#element instanceof HTMLInputElement) {
+    if (
+      this.#element instanceof HTMLInputElement ||
+      this.#element instanceof HTMLButtonElement
+    ) {
       this.#element.type = type;
     }
   }

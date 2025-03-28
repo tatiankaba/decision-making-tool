@@ -11,6 +11,7 @@ export default function createBackBtn(): HTMLElement {
     className: ["back-btn", "btn"],
     callback: handler,
     textContent: "BACK",
+    type: "button",
   };
   const btn = new ElementCreator(params).getElement();
   return btn;

@@ -1,12 +1,31 @@
 .btns-wrapper {
   display: flex;
+  flex-wrap: wrap;
   gap: 10px;
   justify-content: center;
 
-  width: 600px;
   max-width: 600px;
   margin: 0 auto;
   padding: 20px;
   border: 1px solid black;
   border-radius: 5px;
+}
+
+.notification-field {
+  width: 200px;
+  margin: 0 auto;
+  margin-top: 10px;
+  padding: 10px;
+  border: 1px solid black;
+  border-radius: 5px;
+
+  font-size: 25px;
+  text-align: center;
+}
+
+.canvas-wrapper {
+  display: flex;
+  justify-content: center;
+  margin: 0 auto;
+  margin-top: 20px;
 }
