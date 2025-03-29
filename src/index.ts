@@ -6,17 +6,22 @@ import ErrorPage from "./error-page/ErrorPage";
 
 new App();
 
-window.addEventListener("popstate", () => {
-  const path = window.location.pathname;
+handleHashChange();
 
+function handleHashChange(): void {
+  const page = window.location.hash.substring(1);
   clearWorkSpace();
+  console.log(page);
 
-  if (path === "/decision-picker") {
-    return new DecisionPickerPage();
-  } else if (path === "/") {
-    return new App();
+  if (page === "/decision-picker") {
+    new DecisionPickerPage();
+  } else if (page === "/") {
+    new App();
   } else {
-    window.history.pushState({}, "", "./");
-    return new ErrorPage();
+    new ErrorPage();
   }
-});
+}
+
+window.addEventListener("DOMContentLoaded", handleHashChange);
+window.addEventListener("hashchange", handleHashChange);
+window.addEventListener("popstate", handleHashChange);

@@ -4,7 +4,7 @@ import "./button.css";
 
 export default function createBackBtn(): HTMLElement {
   const handler = (): void => {
-    navigateToPage("/");
+    navigateToPage("/#/");
   };
   const params = {
     tag: "button",

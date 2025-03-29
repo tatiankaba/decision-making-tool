@@ -162,7 +162,7 @@ export default class Main extends View {
     const handler = (): void => {
       if (areOptionsCorrect()) {
         saveDataToLocalStorage();
-        navigateToPage("/decision-picker");
+        navigateToPage("/#/decision-picker");
       } else {
         document.body.append(new StartModalWindow().getElement());
       }
