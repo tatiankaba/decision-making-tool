@@ -19,6 +19,10 @@ const baseConfig = {
         test: /\.(png|jpg|jpeg|gif|svg)$/i,
         type: "asset/resource",
       },
+      {
+        test: /\.(mp3|wav|ogg)$/,
+        type: "asset/resource",
+      },
     ],
   },
   resolve: {

@@ -3,10 +3,17 @@ import DecisionPickerForm from "./DecisionPickerForm";
 import { ElementCreator } from "../core/BaseElement";
 import "./decision-picker.css";
 import Canvas from "./canvas";
+import { playMusic } from "../utils/soundBar";
 
 const CssStyles = {
   NOTIFICATION: "notification-field",
 };
+
+declare global {
+  interface DocumentEventMap {
+    startAnimation: CustomEvent;
+  }
+}
 
 export default class DecisionPickerPage {
   private header: HeaderView;
@@ -30,8 +37,7 @@ export default class DecisionPickerPage {
       this.notification,
       this.#canvas.getElement(),
     );
-    // this.#canvas.startRotation();
-    // this.updateNotification();
+    this.addEventListeners();
   }
 
   private updateNotification(): void {
@@ -41,5 +47,26 @@ export default class DecisionPickerPage {
         this.notification.textContent = this.#canvas.getTitle();
       }
     }, rotationSpeed);
+  }
+
+  private addEventListeners(): void {
+    document.addEventListener("startAnimation", (event: CustomEvent): void => {
+      if (event instanceof CustomEvent) {
+        const { seconds, sound } = event.detail;
+        if (this.#canvas) {
+          this.#canvas.startRotation();
+          this.updateNotification();
+          setTimeout(
+            () => {
+              this.#canvas.stopRotation();
+              if (sound === "on") {
+                playMusic();
+              }
+            },
+            Number(seconds) * 1000,
+          );
+        }
+      }
+    });
   }
 }

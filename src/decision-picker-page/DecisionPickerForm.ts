@@ -26,6 +26,17 @@ export default class DecisionPickerForm extends View {
         if (secondsInput instanceof HTMLInputElement) {
           this.seconds = secondsInput.value;
         }
+
+        if (Number(this.seconds) > 0) {
+          const eventData = {
+            seconds: this.seconds,
+            sound: this.sound,
+          };
+          const event: CustomEvent = new CustomEvent("startAnimation", {
+            detail: eventData,
+          });
+          document.dispatchEvent(event);
+        }
       }
     };
     const params = {
