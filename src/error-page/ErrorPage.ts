@@ -5,7 +5,7 @@ import createBackBtn from "../components/buttons/back-btn";
 
 const CssStyles = {
   ERROR: "error-block",
-  BACK_BTN: "back-btn",
+  BACK_BTN: "back",
 };
 
 export default class ErrorPage {
@@ -21,6 +21,7 @@ export default class ErrorPage {
     };
     this.#errorBlock = new ElementCreator(params).getElement();
     this.#backBtn = createBackBtn();
+    this.#backBtn.classList.add(CssStyles.BACK_BTN);
     this.#header = new HeaderView().getElement();
     document.body.append(this.#header, this.#errorBlock, this.#backBtn);
   }
