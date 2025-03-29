@@ -11,9 +11,6 @@ const CssStyles = {
 export default function createSoundInput(): HTMLElement {
   const handler = (): void => {
     label.classList.toggle(CssStyles.SOUND_OFF);
-    if (soundInput instanceof HTMLInputElement) {
-      console.log(soundInput.checked);
-    }
   };
   const params = {
     tag: "input",

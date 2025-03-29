@@ -7,7 +7,7 @@ const CssStyles = {
 
 export default class DecisionPickerForm extends View {
   private btnsWrapper: BtnsWrapper;
-  private sound: string;
+  private sound: boolean;
   private seconds: string;
 
   constructor() {
@@ -19,7 +19,7 @@ export default class DecisionPickerForm extends View {
 
         const soundInput = elements.namedItem("sound");
         if (soundInput instanceof HTMLInputElement) {
-          this.sound = soundInput.value;
+          this.sound = soundInput.checked;
         }
 
         const secondsInput = elements.namedItem("seconds");
@@ -47,7 +47,7 @@ export default class DecisionPickerForm extends View {
     };
     super(params);
     this.btnsWrapper = new BtnsWrapper();
-    this.sound = "true";
+    this.sound = true;
     this.seconds = "16";
     this.getElement().append(this.btnsWrapper.getElement());
   }

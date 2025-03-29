@@ -59,7 +59,7 @@ export default class DecisionPickerPage {
           setTimeout(
             () => {
               this.#canvas.stopRotation();
-              if (sound === "on") {
+              if (sound) {
                 playMusic();
               }
             },
