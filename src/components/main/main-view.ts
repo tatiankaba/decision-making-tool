@@ -11,6 +11,7 @@ import navigateToPage from "../../utils/navigateTO";
 import areOptionsCorrect from "../../utils/areOptionsCorrect";
 import StartModalWindow from "../../modal-view/startModalWindow";
 import saveDataToLocalStorage from "../../utils/saveDataToLocalStorage";
+import showNotification from "../../utils/showNotification";
 
 const CssClasses = {
   MAIN: "main",
@@ -123,9 +124,9 @@ export default class Main extends View {
             }
           } catch (error) {
             if (error instanceof Error) {
-              alert("File is incorrect: " + error.message);
+              showNotification("The file is in the wrong format");
             } else {
-              alert("Unknown error");
+              showNotification("Unknown error");
             }
           }
         };

@@ -3,7 +3,6 @@ import { ElementCreator } from "./BaseElement";
 
 export default class View {
   #element: HTMLElement;
-  #children: HTMLElement[] | HTMLElement | null | undefined;
 
   constructor(params: parameters) {
     this.#element = this.createView(params);

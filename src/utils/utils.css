@@ -1,0 +1,16 @@
+.notification-msg {
+  position: absolute;
+  top: 10%;
+  left: 50%;
+  transform: translateX(-50%);
+
+  width: 80%;
+  padding: 20px;
+  border-radius: 10px;
+
+  font-size: 25px;
+  color: white;
+  text-align: center;
+
+  background-color: brown;
+}
