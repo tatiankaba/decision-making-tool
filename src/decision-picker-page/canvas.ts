@@ -2,6 +2,7 @@ import type { localStorageObject } from "../types/common";
 import "./decision-picker.css";
 import getChosenOptionsArray from "../utils/getChosenOptionsArray";
 import generateRandomColor from "../utils/generateRandomColor";
+import easeInOut from "../utils/easeInout";
 
 const CssStyles = {
   CANVAS: "canvas",
@@ -41,6 +42,9 @@ export default class Canvas {
   #endAngle: number;
   #rotationAngle: number;
   #animationFrameId: number | null;
+  #startTime: number | null;
+  #elapsedTime: number;
+  #speed: number;
 
   constructor() {
     this.#wrapper = document.createElement("div");
@@ -48,6 +52,9 @@ export default class Canvas {
     this.#canvas = document.createElement("canvas");
     this.#canvas.setAttribute("id", "canvas1");
     this.#canvas.classList.add(CssStyles.CANVAS);
+    this.#startTime = null;
+    this.#elapsedTime = 0;
+    this.#speed = 0.05;
     this.#ctx = this.#canvas.getContext("2d");
     this.#radius = 0;
     this.#startAngle = 0;
@@ -76,6 +83,7 @@ export default class Canvas {
 
   public startRotation(): void {
     if (this.#animationFrameId) return;
+    this.#startTime = performance.now();
     this.animate();
   }
 
@@ -208,7 +216,14 @@ export default class Canvas {
   }
 
   private animate(): void {
-    this.#rotationAngle += 0.01;
+    const currentTime = performance.now();
+    if (this.#startTime !== null) {
+      this.#elapsedTime = currentTime - this.#startTime;
+    }
+
+    const easingFactor = easeInOut(this.#elapsedTime / 10000);
+    const adjustedSpeed = this.#speed * easingFactor;
+    this.#rotationAngle += adjustedSpeed;
 
     this.drawCircle();
     this.drawTriangle();
