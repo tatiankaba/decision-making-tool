@@ -6,8 +6,6 @@ import ErrorPage from "./error-page/ErrorPage";
 
 new App();
 
-handleHashChange();
-
 function handleHashChange(): void {
   const page = window.location.hash.substring(1);
   clearWorkSpace();
