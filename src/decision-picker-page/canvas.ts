@@ -1,8 +1,8 @@
 import type { localStorageObject } from "../types/common";
 import "./decision-picker.css";
-import getChosenOptionsArray from "../utils/getChosenOptionsArray";
-import generateRandomColor from "../utils/generateRandomColor";
-import easeInOut from "../utils/easeInout";
+import getChosenOptionsArray from "../utils/get-chosen-options-array";
+import generateRandomColor from "../utils/generate-random-color";
+import easeInOut from "../utils/ease-in-out";
 
 const CssStyles = {
   CANVAS: "canvas",
@@ -110,17 +110,11 @@ export default class Canvas {
     const normalizedEndAngle = (endAngle + 2 * Math.PI) % (2 * Math.PI);
     const normalizedAngle = (angle + 2 * Math.PI) % (2 * Math.PI);
 
-    if (normalizedStartAngle < normalizedEndAngle) {
-      return (
-        normalizedAngle >= normalizedStartAngle &&
-        normalizedAngle <= normalizedEndAngle
-      );
-    } else {
-      return (
-        normalizedAngle >= normalizedStartAngle ||
-        normalizedAngle <= normalizedEndAngle
-      );
-    }
+    return normalizedStartAngle < normalizedEndAngle
+      ? normalizedAngle >= normalizedStartAngle &&
+          normalizedAngle <= normalizedEndAngle
+      : normalizedAngle >= normalizedStartAngle ||
+          normalizedAngle <= normalizedEndAngle;
   }
 
   private resizeCanvas(): void {
@@ -141,16 +135,16 @@ export default class Canvas {
     let weights: number[];
 
     if (options) {
-      totalWeight = options.reduce((prev, cur) => {
-        return prev + Number(cur.weight);
+      totalWeight = options.reduce((previous, current) => {
+        return previous + Number(current.weight);
       }, 0);
       titles = options.map((option) => option.title ?? "No name");
       weights = options.map((option) => Number(option.weight));
 
       let startAngle = this.#rotationAngle;
 
-      for (let i = 0; i < weights.length; i++) {
-        const sliceAngle = (weights[i] / totalWeight) * 2 * Math.PI;
+      for (const [index, weight] of weights.entries()) {
+        const sliceAngle = (weight / totalWeight) * 2 * Math.PI;
         const endAngle = startAngle + sliceAngle;
         const radiusDecline = 10;
         const radius =
@@ -174,7 +168,7 @@ export default class Canvas {
         this.#ctx.fillStyle = "blue";
 
         this.#ctx.fillStyle =
-          i < colors.length ? colors[i] : generateRandomColor();
+          index < colors.length ? colors[index] : generateRandomColor();
         this.#ctx.strokeStyle = "blue";
         this.#ctx.lineWidth = 1;
         this.#ctx.fill();
@@ -186,14 +180,14 @@ export default class Canvas {
         this.#ctx.font = "16px Arial";
         this.#ctx.textAlign = "center";
         this.#ctx.textBaseline = "middle";
-        this.#ctx.fillText(`${titles[i]}`, textX, textY);
+        this.#ctx.fillText(`${titles[index]}`, textX, textY);
         this.#ctx.stroke();
 
         if (
           this.isSegmentInTriangle(startAngle, endAngle) &&
-          this.#title !== titles[i]
+          this.#title !== titles[index]
         ) {
-          this.#title = titles[i];
+          this.#title = titles[index];
         }
         startAngle = endAngle;
       }
@@ -221,7 +215,7 @@ export default class Canvas {
       this.#elapsedTime = currentTime - this.#startTime;
     }
 
-    const easingFactor = easeInOut(this.#elapsedTime / 10000);
+    const easingFactor = easeInOut(this.#elapsedTime / 10_000);
     const adjustedSpeed = this.#speed * easingFactor;
     this.#rotationAngle += adjustedSpeed;
 

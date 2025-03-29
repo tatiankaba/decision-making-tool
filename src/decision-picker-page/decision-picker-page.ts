@@ -1,9 +1,9 @@
 import HeaderView from "../components/header/header-view";
-import DecisionPickerForm from "./DecisionPickerForm";
-import { ElementCreator } from "../core/BaseElement";
+import DecisionPickerForm from "./decision-picker-form";
+import { ElementCreator } from "../core/base-element";
 import "./decision-picker.css";
 import Canvas from "./canvas";
-import { playMusic } from "../utils/soundBar";
+import { playMusic } from "../utils/sound-bar";
 
 const CssStyles = {
   NOTIFICATION: "notification-field",
@@ -24,12 +24,12 @@ export default class DecisionPickerPage {
   constructor() {
     this.header = new HeaderView();
     this.form = new DecisionPickerForm();
-    const params = {
+    const parameters = {
       tag: "p",
       className: CssStyles.NOTIFICATION,
       textContent: "Press start button",
     };
-    this.notification = new ElementCreator(params).getElement();
+    this.notification = new ElementCreator(parameters).getElement();
     this.#canvas = new Canvas();
     document.body.append(
       this.header.getElement(),

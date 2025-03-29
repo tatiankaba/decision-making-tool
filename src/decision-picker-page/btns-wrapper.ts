@@ -1,9 +1,9 @@
-import createBackBtn from "../components/buttons/back-btn";
+import createBackButton from "../components/buttons/back-button";
 import "./decision-picker.css";
-import View from "../core/View";
-import createSoundInput from "../components/buttons/soundBtn";
-import createSecInput from "../components/inputs/secInput";
-import createSubmitBtn from "../components/buttons/submit-btn";
+import View from "../core/main-view";
+import createSoundInput from "../components/buttons/sound-button";
+import createSecInput from "../components/inputs/sec-input";
+import createSubmitButton from "../components/buttons/submit-button";
 
 const CssStyles = {
   WRAPPER: "btns-wrapper",
@@ -16,15 +16,15 @@ export default class BtnsWrapper extends View {
   #submitBtn: HTMLElement;
 
   constructor() {
-    const params = {
+    const parameters = {
       tag: "div",
       className: CssStyles.WRAPPER,
     };
-    super(params);
+    super(parameters);
     this.#soundBtn = createSoundInput();
-    this.#backBtn = createBackBtn();
+    this.#backBtn = createBackButton();
     this.#secInput = createSecInput();
-    this.#submitBtn = createSubmitBtn();
+    this.#submitBtn = createSubmitButton();
     this.addChild(this.#backBtn);
     this.addChild(this.#soundBtn);
     this.addChild(this.#secInput);

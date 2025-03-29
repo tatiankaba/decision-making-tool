@@ -1,6 +1,6 @@
 import "./modal-view.css";
-import View from "../core/View";
-import { ElementCreator } from "../core/BaseElement";
+import View from "../core/main-view";
+import { ElementCreator } from "../core/base-element";
 
 const CssStyles = {
   OVERLAY: "overlay",
@@ -19,12 +19,12 @@ export default class ModalView extends View {
         this.closeModalWindow();
       }
     };
-    const params = {
+    const parameters_ = {
       tag: "div",
       className: CssStyles.OVERLAY,
       callback: handler,
     };
-    super(params);
+    super(parameters_);
     const parameters = {
       tag: "div",
       className: CssStyles.MODAL,
@@ -41,14 +41,14 @@ export default class ModalView extends View {
     const handler = (): void => {
       this.closeModalWindow();
     };
-    const params = {
+    const parameters = {
       tag: "button",
       className: CssStyles.BUTTON,
       callback: handler,
       textContent: text,
     };
-    const closeBtn = new ElementCreator(params).getElement();
-    return closeBtn;
+    const closeButton = new ElementCreator(parameters).getElement();
+    return closeButton;
   }
 
   protected closeModalWindow(): void {

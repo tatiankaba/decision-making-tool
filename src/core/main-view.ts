@@ -1,19 +1,19 @@
 import type { parameters } from "../types/common";
-import { ElementCreator } from "./BaseElement";
+import { ElementCreator } from "./base-element";
 
 export default class View {
   #element: HTMLElement;
 
-  constructor(params: parameters) {
-    this.#element = this.createView(params);
+  constructor(parameters_: parameters) {
+    this.#element = this.createView(parameters_);
   }
 
   public getElement(): HTMLElement {
     return this.#element;
   }
 
-  protected createView(params: parameters): HTMLElement {
-    const elementCreator = new ElementCreator(params);
+  protected createView(parameters_: parameters): HTMLElement {
+    const elementCreator = new ElementCreator(parameters_);
     this.#element = elementCreator.getElement();
     return this.#element;
   }
@@ -26,7 +26,7 @@ export default class View {
     } else if (element instanceof HTMLElement) {
       this.#element.append(element);
     } else if (Array.isArray(element)) {
-      element.forEach((child) => this.addChild(child));
+      for (const child of element) this.addChild(child);
     }
   }
 }

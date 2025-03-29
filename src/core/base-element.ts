@@ -3,49 +3,49 @@ import type { parameters } from "../types/common";
 export class ElementCreator {
   #element: HTMLElement;
 
-  constructor(params: parameters) {
-    this.#element = document.createElement(params.tag);
-    this.setCSSClasses(params.className);
-    if (params.textContent) {
-      this.setText(params.textContent);
+  constructor(parameters_: parameters) {
+    this.#element = document.createElement(parameters_.tag);
+    this.setCSSClasses(parameters_.className);
+    if (parameters_.textContent) {
+      this.setText(parameters_.textContent);
     }
 
-    if (params.checked) {
-      this.addCheckedStatus(params.checked);
+    if (parameters_.checked) {
+      this.addCheckedStatus(parameters_.checked);
     }
 
-    if (params.callback) {
-      this.setCallBack(params.callback, params.typeOfEvent);
+    if (parameters_.callback) {
+      this.setCallBack(parameters_.callback, parameters_.typeOfEvent);
     }
-    if (params.value) {
-      this.setValue(params.value);
+    if (parameters_.value) {
+      this.setValue(parameters_.value);
     }
-    if (params.placeholder) {
-      this.setPlaceholder(params.placeholder);
+    if (parameters_.placeholder) {
+      this.setPlaceholder(parameters_.placeholder);
     }
-    if (params.id) {
-      this.#element.id = params.id;
+    if (parameters_.id) {
+      this.#element.id = parameters_.id;
     }
-    if (params.type) {
-      this.setType(params.type);
+    if (parameters_.type) {
+      this.setType(parameters_.type);
     }
-    if (params.for) {
-      this.setFor(params.for);
+    if (parameters_.for) {
+      this.setFor(parameters_.for);
     }
-    if (params.href) {
-      this.setHref(params.href);
-    }
-
-    if (params.download) {
-      this.setDownloadName(params.download);
+    if (parameters_.href) {
+      this.setHref(parameters_.href);
     }
 
-    if (params.accept) {
-      this.setAccess(params.accept);
+    if (parameters_.download) {
+      this.setDownloadName(parameters_.download);
     }
 
-    if (params.name) {
-      this.setName(params.name);
+    if (parameters_.accept) {
+      this.setAccess(parameters_.accept);
+    }
+
+    if (parameters_.name) {
+      this.setName(parameters_.name);
     }
   }
 
@@ -119,9 +119,9 @@ export class ElementCreator {
   protected setCSSClasses(classes: string[] | string): void {
     if (!this.#element) return;
     if (Array.isArray(classes)) {
-      classes.forEach((className) => {
+      for (const className of classes) {
         this.#element.classList.add(className);
-      });
+      }
     } else {
       this.#element.classList.add(classes);
     }

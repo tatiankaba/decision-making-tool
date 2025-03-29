@@ -1,11 +1,11 @@
 import "./utils.css";
 
-export default function showNotification(msg: string): void {
+export default function showNotification(message: string): void {
   const notificationBlock: HTMLElement = document.createElement("div");
   notificationBlock.classList.add("notification-msg");
-  notificationBlock.textContent = msg;
+  notificationBlock.textContent = message;
   document.body.append(notificationBlock);
   setTimeout(() => {
-    document.body.removeChild(notificationBlock);
+    notificationBlock.remove();
   }, 2000);
 }

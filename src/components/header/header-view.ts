@@ -1,6 +1,6 @@
 import "./header.css";
-import View from "../../core/View";
-import { ElementCreator } from "../../core/BaseElement";
+import View from "../../core/main-view";
+import { ElementCreator } from "../../core/base-element";
 
 const CssClasses = {
   HEADER: "header",

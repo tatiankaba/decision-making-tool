@@ -1,18 +1,18 @@
 import type { localStorageObject } from "../types/common";
 
 export default function filterArray(
-  arr: localStorageObject[],
+  array: localStorageObject[],
 ): localStorageObject[] {
-  const validArr: localStorageObject[] = arr.filter(
+  const validArray: localStorageObject[] = array.filter(
     ({ title, weight }: Partial<localStorageObject>) => {
       return (
         title &&
         title.length > 1 &&
         weight !== undefined &&
-        parseInt(weight) > 0 &&
-        !isNaN(parseInt(weight))
+        Number.parseInt(weight) > 0 &&
+        !Number.isNaN(Number.parseInt(weight))
       );
     },
   );
-  return validArr;
+  return validArray;
 }

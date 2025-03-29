@@ -1,5 +1,5 @@
-import { ElementCreator } from "../core/BaseElement";
-import ModalView from "./ModalView";
+import { ElementCreator } from "../core/base-element";
+import ModalView from "./modal-view";
 import "./start-modal.css";
 
 const CssClasses = {
@@ -13,12 +13,12 @@ export default class StartModalWindow extends ModalView {
 
   constructor() {
     super();
-    const params = {
+    const parameters = {
       tag: "div",
       className: CssClasses.INFORMATION_WINDOW,
       textContent: `Please add at least 2 valid options. An option is considered valid if its title is not empty and its weight is greater than 0`,
     };
-    this.#informationBlock = new ElementCreator(params).getElement();
+    this.#informationBlock = new ElementCreator(parameters).getElement();
     this.#modal = this.getModalWindow();
     this.#closeBtn = this.createCloseBtn("Close");
     this.#modal.append(this.#informationBlock, this.#closeBtn);

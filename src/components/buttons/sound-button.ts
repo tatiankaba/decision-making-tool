@@ -1,4 +1,4 @@
-import { ElementCreator } from "../../core/BaseElement";
+import { ElementCreator } from "../../core/base-element";
 import "./button.css";
 
 const CssStyles = {
@@ -12,7 +12,7 @@ export default function createSoundInput(): HTMLElement {
   const handler = (): void => {
     label.classList.toggle(CssStyles.SOUND_OFF);
   };
-  const params = {
+  const parameters_ = {
     tag: "input",
     type: "checkbox",
     className: CssStyles.INPUT,
@@ -21,7 +21,7 @@ export default function createSoundInput(): HTMLElement {
     callback: handler,
     checked: true,
   };
-  const soundInput = new ElementCreator(params).getElement();
+  const soundInput = new ElementCreator(parameters_).getElement();
 
   const parameters = {
     tag: "label",

@@ -1,4 +1,4 @@
-import { ElementCreator } from "../../core/BaseElement";
+import { ElementCreator } from "../../core/base-element";
 import "./button.css";
 
 const CssClasses = {
@@ -17,24 +17,24 @@ export default function createSaveButton(): HTMLElement {
       type: "application/json",
     });
     const url = URL.createObjectURL(jsonBlob);
-    const params = {
+    const parameters = {
       tag: "a",
       href: url,
       download: "data.json",
       className: "download-link",
     };
-    const a = new ElementCreator(params).getElement();
-    document.body.appendChild(a);
+    const a = new ElementCreator(parameters).getElement();
+    document.body.append(a);
     a.click();
-    document.body.removeChild(a);
+    a.remove();
     URL.revokeObjectURL(url);
   };
-  const params = {
+  const parameters = {
     tag: "button",
     className: [CssClasses.SAVE_BUTTON, CssClasses.BUTTON],
     callback: handler,
     textContent: "Save list",
   };
-  const saveBtn = new ElementCreator(params);
-  return saveBtn.getElement();
+  const saveButton = new ElementCreator(parameters);
+  return saveButton.getElement();
 }

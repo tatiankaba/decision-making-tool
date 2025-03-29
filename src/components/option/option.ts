@@ -1,4 +1,4 @@
-import { ElementCreator } from "../../core/BaseElement";
+import { ElementCreator } from "../../core/base-element";
 import "./option.css";
 import type { localStorageObject } from "../../types/common";
 const CssClasses = {
@@ -14,21 +14,21 @@ export default class Option {
   #title: string = "";
   #weight: number | string = "";
 
-  constructor(obj: localStorageObject) {
-    const params = {
+  constructor(object: localStorageObject) {
+    const parameters = {
       tag: "li",
       className: CssClasses.LI,
     };
-    this.#element = new ElementCreator(params).getElement();
-    this.#id = obj.id;
-    if (obj.title) {
-      this.#title = obj?.title;
+    this.#element = new ElementCreator(parameters).getElement();
+    this.#id = object.id;
+    if (object.title) {
+      this.#title = object?.title;
     }
-    if (obj.id) {
-      this.#id = obj?.id;
+    if (object.id) {
+      this.#id = object?.id;
     }
-    if (obj.weight) {
-      this.#weight = parseInt(obj.weight);
+    if (object.weight) {
+      this.#weight = Number.parseInt(object.weight);
     }
     this.#element.append(
       this.createLabel(),
@@ -44,13 +44,13 @@ export default class Option {
   }
 
   private createLabel(): HTMLElement {
-    const params = {
+    const parameters = {
       tag: "label",
       className: CssClasses.LABEL,
       for: this.#id,
       textContent: `#${this.#id}`,
     };
-    const label = new ElementCreator(params);
+    const label = new ElementCreator(parameters);
     return label.getElement();
   }
 
@@ -62,7 +62,7 @@ export default class Option {
         this.updateLocaleStorage("title", this.#title);
       }
     };
-    const params = {
+    const parameters = {
       tag: "input",
       className: CssClasses.INPUT,
       callback: inputChange,
@@ -72,7 +72,7 @@ export default class Option {
       typeOfEvent: "input",
       value: this.#title ?? "",
     };
-    const inputTitle = new ElementCreator(params);
+    const inputTitle = new ElementCreator(parameters);
     return inputTitle.getElement();
   }
 
@@ -84,7 +84,7 @@ export default class Option {
         this.updateLocaleStorage("weight", this.#weight.toString());
       }
     };
-    const params = {
+    const parameters = {
       tag: "input",
       className: CssClasses.INPUT,
       callback: inputChange,
@@ -93,7 +93,7 @@ export default class Option {
       typeOfEvent: "input",
       value: this.#weight ?? "",
     };
-    const inputWeight = new ElementCreator(params);
+    const inputWeight = new ElementCreator(parameters);
     return inputWeight.getElement();
   }
 
@@ -102,14 +102,14 @@ export default class Option {
       this.#element.remove();
       this.deleteIdFromLocalStorage();
     };
-    const params = {
+    const parameters = {
       tag: "button",
       className: CssClasses.BUTTON,
       textContent: "delete",
       callback: removeElement,
     };
-    const deleteBtn = new ElementCreator(params);
-    return deleteBtn.getElement();
+    const deleteButton = new ElementCreator(parameters);
+    return deleteButton.getElement();
   }
 
   private saveIdToLocalStorage(): void {
@@ -139,7 +139,7 @@ export default class Option {
   }
 
   private updateLocaleStorage(
-    prop: keyof localStorageObject,
+    property: keyof localStorageObject,
     value: string,
   ): void {
     const options: localStorageObject[] = JSON.parse(
@@ -147,7 +147,7 @@ export default class Option {
     );
     const index: number = options.findIndex((option) => option.id === this.#id);
     if (index !== -1) {
-      options[index][prop] = value;
+      options[index][property] = value;
       localStorage.setItem("options", JSON.stringify(options));
     }
   }

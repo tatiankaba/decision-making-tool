@@ -1,5 +1,5 @@
 import type { localStorageObject } from "../types/common";
-import filterArray from "./filterArray";
+import filterArray from "./filter-array";
 
 export default function saveDataToLocalStorage(): void {
   const options = localStorage.getItem("options");

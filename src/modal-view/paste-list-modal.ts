@@ -1,7 +1,7 @@
-import ModalView from "./ModalView";
-import { ElementCreator } from "../core/BaseElement";
+import ModalView from "./modal-view";
+import { ElementCreator } from "../core/base-element";
 import "./paste-list.css";
-import isTypedOptionInCVSFormat from "../utils/isTypedTextInCVSFormat";
+import isTypedOptionInCVSFormat from "../utils/is-typed-text-in-cvs-format";
 import { listOfOptions } from "../components/option-list/option-list";
 
 const CssClasses = {
@@ -19,7 +19,7 @@ export default class pasteListModalView extends ModalView {
 
   constructor() {
     super();
-    const params = {
+    const parameters = {
       tag: "textarea",
       className: CssClasses.TEXTAREA,
       placeholder: `Paste a list of new options in a CSV-like format:
@@ -29,7 +29,7 @@ title , with , commas,3 -> | title , with , commas | 3 |
 title with &quot;quotes&quot;,4   -> | title with &quot;quotes&quot;   | 4 |`,
     };
     this.#btnsWrapper = this.createBtnsWrapper();
-    this.#textarea = new ElementCreator(params).getElement();
+    this.#textarea = new ElementCreator(parameters).getElement();
     this.#closeBtn = this.createCloseBtn("cancel");
     this.#confirmBtn = this.createConfirmBtn();
     this.#modal = this.getModalWindow();
@@ -49,28 +49,25 @@ title with &quot;quotes&quot;,4   -> | title with &quot;quotes&quot;   | 4 |`,
       if (this.#textarea instanceof HTMLTextAreaElement) {
         const value: string = this.#textarea.value;
         if (value.length > 0) {
-          const arr: string[] = value.split("\n");
-          arr.forEach((line) => {
+          const array: string[] = value.split("\n");
+          for (const line of array) {
             if (isTypedOptionInCVSFormat(line)) {
-              const arr = line.split(",");
-              const lastDigit = String(arr[arr.length - 1]);
-              listOfOptions.addOption(
-                arr.slice(0, arr.length - 1).join(""),
-                lastDigit,
-              );
+              const array = line.split(",");
+              const lastDigit = String(array.at(-1));
+              listOfOptions.addOption(array.slice(0, -1).join(""), lastDigit);
             }
-          });
+          }
         }
       }
       this.closeModalWindow();
     };
-    const params = {
+    const parameters = {
       tag: "button",
       className: CssClasses.CONFIRM_BUTTON,
       textContent: "confirm",
       callback: handler,
     };
-    this.#confirmBtn = new ElementCreator(params).getElement();
+    this.#confirmBtn = new ElementCreator(parameters).getElement();
     return this.#confirmBtn;
   }
 }

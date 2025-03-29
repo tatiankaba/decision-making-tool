@@ -1,17 +1,17 @@
-import View from "../../core/View";
+import View from "../../core/main-view";
 import "./main.css";
-import { ElementCreator } from "../../core/BaseElement";
+import { ElementCreator } from "../../core/base-element";
 import "./main.css";
-import createSaveButton from "../buttons/save-btn";
+import createSaveButton from "../buttons/save-button";
 import type { ListOfOptions } from "../option-list/option-list";
 import { listOfOptions } from "../option-list/option-list";
-import { isJSONValid } from "../../utils/isJSONValid";
-import pasteListModalView from "../../modal-view/pasteListModal";
-import navigateToPage from "../../utils/navigateTO";
-import areOptionsCorrect from "../../utils/areOptionsCorrect";
-import StartModalWindow from "../../modal-view/startModalWindow";
-import saveDataToLocalStorage from "../../utils/saveDataToLocalStorage";
-import showNotification from "../../utils/showNotification";
+import { isJSONValid } from "../../utils/is-json-valid";
+import pasteListModalView from "../../modal-view/paste-list-modal";
+import navigateToPage from "../../utils/navigate-to";
+import areOptionsCorrect from "../../utils/are-options-correct";
+import StartModalWindow from "../../modal-view/start-modal-window";
+import saveDataToLocalStorage from "../../utils/save-data-to-local-storage";
+import showNotification from "../../utils/show-notification";
 
 const CssClasses = {
   MAIN: "main",
@@ -25,11 +25,11 @@ export default class Main extends View {
   #startBtn: HTMLElement;
 
   constructor() {
-    const params = {
+    const parameters = {
       tag: "main",
       className: CssClasses.MAIN,
     };
-    super(params);
+    super(parameters);
     this.#id = 1;
     this.#startBtn = this.createStartButton();
     this.#wrapper = listOfOptions;
@@ -54,7 +54,7 @@ export default class Main extends View {
     const currentElement = this.#wrapper.getElement();
     if (currentElement !== null) {
       while (currentElement.firstElementChild) {
-        currentElement.removeChild(currentElement.firstElementChild);
+        currentElement.firstElementChild.remove();
       }
     }
     currentElement.append(element);
@@ -64,25 +64,25 @@ export default class Main extends View {
     const addOption = (): void => {
       this.#wrapper.addOption();
     };
-    const params = {
+    const parameters = {
       tag: "button",
       className: CssClasses.ADD_BUTTON,
       callback: addOption,
       textContent: "add option",
     };
-    const addBtn = new ElementCreator(params);
-    return addBtn.getElement();
+    const addButton = new ElementCreator(parameters);
+    return addButton.getElement();
   }
 
   private createClearButton(): HTMLElement {
-    const params = {
+    const parameters = {
       tag: "button",
       className: CssClasses.ADD_BUTTON,
       callback: this.#wrapper.clearList.bind(this.#wrapper),
       textContent: "Clear list",
     };
-    const clearBtn = new ElementCreator(params);
-    return clearBtn.getElement();
+    const clearButton = new ElementCreator(parameters);
+    return clearButton.getElement();
   }
 
   private createPasteButton(): HTMLElement {
@@ -90,50 +90,46 @@ export default class Main extends View {
       const modal = new pasteListModalView().getElement();
       document.body.append(modal);
     };
-    const params = {
+    const parameters = {
       tag: "button",
       className: CssClasses.ADD_BUTTON,
       callback: handler,
       textContent: "Paste list",
     };
-    this.#pasteBtn = new ElementCreator(params).getElement();
+    this.#pasteBtn = new ElementCreator(parameters).getElement();
     return this.#pasteBtn;
   }
 
   private createLoadBtn(): HTMLElement {
-    const handler = (event: Event): void => {
+    const handler = async (event: Event): Promise<void> => {
       if (event.target instanceof HTMLInputElement) {
         const input: HTMLInputElement = event.target;
         if (!input.files?.length) return;
         const file = input.files[0];
-        const reader = new FileReader();
-        reader.onload = (e): void => {
-          try {
-            const response = e.target?.result;
-            if (typeof response !== "string") {
-              throw new Error("File content is not a string");
-            }
-            const parsedJsonData = JSON.parse(response);
-            if (isJSONValid(parsedJsonData)) {
-              localStorage.removeItem("options");
-              this.#wrapper.clearList();
-              localStorage.setItem("options", JSON.stringify(parsedJsonData));
-              this.#wrapper.updateList();
-            } else {
-              throw new Error("Your file isn't correct JSON");
-            }
-          } catch (error) {
-            if (error instanceof Error) {
-              showNotification("The file is in the wrong format");
-            } else {
-              showNotification("Unknown error");
-            }
+        try {
+          const response = await file.text();
+          if (typeof response !== "string") {
+            throw new TypeError("File content is not a string");
           }
-        };
-        reader.readAsText(file);
+          const parsedJsonData = JSON.parse(response);
+          if (isJSONValid(parsedJsonData)) {
+            localStorage.removeItem("options");
+            this.#wrapper.clearList();
+            localStorage.setItem("options", JSON.stringify(parsedJsonData));
+            this.#wrapper.updateList();
+          } else {
+            throw new Error("Your file isn't correct JSON");
+          }
+        } catch (error) {
+          if (error instanceof Error) {
+            showNotification("The file is in the wrong format");
+          } else {
+            showNotification("Unknown error");
+          }
+        }
       }
     };
-    const inputParams = {
+    const inputParameters = {
       tag: "input",
       className: CssClasses.ADD_BUTTON,
       callback: handler,
@@ -142,20 +138,20 @@ export default class Main extends View {
       type: "file",
       accept: ".json",
     };
-    const loadInput = new ElementCreator(inputParams).getElement();
-    const btnHandler = (): void => {
+    const loadInput = new ElementCreator(inputParameters).getElement();
+    const buttonHandler = (): void => {
       loadInput.click();
     };
-    const btnParams = {
+    const buttonParameters = {
       tag: "button",
       className: CssClasses.ADD_BUTTON,
-      callback: btnHandler,
+      callback: buttonHandler,
       textContent: "Load file",
     };
 
-    const loadBtn = new ElementCreator(btnParams);
+    const loadButton = new ElementCreator(buttonParameters);
 
-    return loadBtn.getElement();
+    return loadButton.getElement();
   }
 
   private createStartButton(): HTMLElement {
@@ -167,13 +163,13 @@ export default class Main extends View {
         document.body.append(new StartModalWindow().getElement());
       }
     };
-    const params = {
+    const parameters = {
       tag: "button",
       className: CssClasses.ADD_BUTTON,
       callback: handler,
       textContent: "Start",
     };
-    this.#startBtn = new ElementCreator(params).getElement();
+    this.#startBtn = new ElementCreator(parameters).getElement();
     return this.#startBtn;
   }
 }

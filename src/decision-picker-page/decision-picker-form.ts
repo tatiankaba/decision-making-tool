@@ -1,5 +1,5 @@
-import BtnsWrapper from "./BtnsWrapper";
-import View from "../core/View";
+import BtnsWrapper from "./btns-wrapper";
+import View from "../core/main-view";
 
 const CssStyles = {
   FORM: "form",
@@ -39,13 +39,13 @@ export default class DecisionPickerForm extends View {
         }
       }
     };
-    const params = {
+    const parameters = {
       tag: "form",
       className: CssStyles.FORM,
       callback: handler,
       typeOfEvent: "submit",
     };
-    super(params);
+    super(parameters);
     this.btnsWrapper = new BtnsWrapper();
     this.sound = true;
     this.seconds = "16";

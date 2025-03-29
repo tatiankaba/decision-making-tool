@@ -1,4 +1,4 @@
-import { ElementCreator } from "../../core/BaseElement";
+import { ElementCreator } from "../../core/base-element";
 import "./input.css";
 
 const CssStyles = {
@@ -10,7 +10,7 @@ const CssStyles = {
 export default function createSecInput(): HTMLElement {
   const wrapper = document.createElement("div");
   wrapper.classList.add(CssStyles.WRAPPER);
-  const params = {
+  const parameters_ = {
     tag: "input",
     className: CssStyles.INPUT,
     placeholder: "sec",
@@ -18,7 +18,7 @@ export default function createSecInput(): HTMLElement {
     id: "sec",
     name: "seconds",
   };
-  const input = new ElementCreator(params).getElement();
+  const input = new ElementCreator(parameters_).getElement();
   const parameters = {
     tag: "label",
     className: CssStyles.LABEL,

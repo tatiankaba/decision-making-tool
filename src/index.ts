@@ -1,7 +1,7 @@
 import App from "./components/app";
 import "./normalize.css";
-import navigateToPage from "./utils/navigateTO";
-import handleHashChange from "./utils/handleHashEvents";
+import navigateToPage from "./utils/navigate-to";
+import handleHashChange from "./utils/handle-hash-events";
 
 new App();
 
