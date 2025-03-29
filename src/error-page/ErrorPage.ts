@@ -1,14 +1,17 @@
 import HeaderView from "../components/header/header-view";
 import { ElementCreator } from "../core/BaseElement";
 import "./error.css";
+import createBackBtn from "../components/buttons/back-btn";
 
 const CssStyles = {
   ERROR: "error-block",
+  BACK_BTN: "back-btn",
 };
 
 export default class ErrorPage {
   #header: HTMLElement;
-  #errorBlock;
+  #errorBlock: HTMLElement;
+  #backBtn: HTMLElement;
 
   constructor() {
     const params = {
@@ -17,7 +20,8 @@ export default class ErrorPage {
       textContent: "This page doesn't exist. Try harder. Do better",
     };
     this.#errorBlock = new ElementCreator(params).getElement();
+    this.#backBtn = createBackBtn();
     this.#header = new HeaderView().getElement();
-    document.body.append(this.#header, this.#errorBlock);
+    document.body.append(this.#header, this.#errorBlock, this.#backBtn);
   }
 }
